@@ -65,7 +65,7 @@ describe("Task API Integration Tests", () => {
 				slug: "new-task",
 				description: "A brand new task",
 				completed: false,
-				due_date: "2025-12-31T23:59:59.000Z",
+				due_date: "2026-12-31T23:59:59.000Z",
 			};
 			const response = await SELF.fetch(`http://local.test/tasks`, {
 				method: "POST",

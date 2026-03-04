@@ -1,12 +1,12 @@
 {
-	"name": "chanfana-openapi-template",
-	"description": "Complete backend API template using Hono + Chanfana + D1 + Vitest.",
+	"name": "serverless-openapi",
+	"version": "1.0.0",
+	"description": "Backend API template using Hono + Chanfana + Vitest.",
 	"private": true,
 	"cloudflare": {
-		"label": "Backend OpenAPI Template",
+		"label": "Backend OpenAPI",
 		"products": [
-			"Workers",
-			"D1"
+			"Workers"
 		],
 		"categories": [
 			"storage"
@@ -19,7 +19,7 @@
 	"scripts": {
 		"cf-typegen": "wrangler types",
 		"deploy": "wrangler deploy",
-		"dev": "pnpm seedLocalDb && wrangler dev",
+		"dev": "wrangler dev",
 		"predeploy": "wrangler d1 migrations apply DB --remote",
 		"seedLocalDb": "wrangler d1 migrations apply DB --local",
 		"schema": "npx chanfana",
@@ -27,11 +27,11 @@
 	},
 	"dependencies": {
 		"chanfana": "2.8.1",
-		"hono": "4.8.2",
+		"hono": "^4.12.5",
 		"zod": "3.25.67"
 	},
 	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "0.8.44",
+		"@cloudflare/vitest-pool-workers": "^0.12.19",
 		"@types/node": "24.0.4",
 		"typescript": "5.8.3",
 		"wrangler": "^4.44.0"

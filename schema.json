@@ -1,9 +1,9 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "My Awesome API",
-    "version": "2.0.0",
-    "description": "This is the documentation for my awesome API."
+    "title": "Tasks API",
+    "version": "1.0.0",
+    "description": "This is the documentation for tasks API."
   },
   "components": {
     "schemas": {},
@@ -84,7 +84,6 @@
                         "required": [
                           "id",
                           "name",
-                          "slug",
                           "description",
                           "completed",
                           "due_date"
@@ -113,9 +112,6 @@
                   "name": {
                     "type": "string"
                   },
-                  "slug": {
-                    "type": "string"
-                  },
                   "description": {
                     "type": "string"
                   },
@@ -129,7 +125,6 @@
                 },
                 "required": [
                   "name",
-                  "slug",
                   "description",
                   "completed",
                   "due_date"
@@ -158,9 +153,6 @@
                         "name": {
                           "type": "string"
                         },
-                        "slug": {
-                          "type": "string"
-                        },
                         "description": {
                           "type": "string"
                         },
@@ -175,7 +167,6 @@
                       "required": [
                         "id",
                         "name",
-                        "slug",
                         "description",
                         "completed",
                         "due_date"
@@ -276,9 +267,6 @@
                         "name": {
                           "type": "string"
                         },
-                        "slug": {
-                          "type": "string"
-                        },
                         "description": {
                           "type": "string"
                         },
@@ -293,7 +281,6 @@
                       "required": [
                         "id",
                         "name",
-                        "slug",
                         "description",
                         "completed",
                         "due_date"
@@ -373,9 +360,6 @@
                   "name": {
                     "type": "string"
                   },
-                  "slug": {
-                    "type": "string"
-                  },
                   "description": {
                     "type": "string"
                   },
@@ -389,7 +373,6 @@
                 },
                 "required": [
                   "name",
-                  "slug",
                   "description",
                   "completed",
                   "due_date"
@@ -418,9 +401,6 @@
                         "name": {
                           "type": "string"
                         },
-                        "slug": {
-                          "type": "string"
-                        },
                         "description": {
                           "type": "string"
                         },
@@ -435,7 +415,6 @@
                       "required": [
                         "id",
                         "name",
-                        "slug",
                         "description",
                         "completed",
                         "due_date"
@@ -576,9 +555,6 @@
                         "name": {
                           "type": "string"
                         },
-                        "slug": {
-                          "type": "string"
-                        },
                         "description": {
                           "type": "string"
                         },
@@ -593,7 +569,6 @@
                       "required": [
                         "id",
                         "name",
-                        "slug",
                         "description",
                         "completed",
                         "due_date"
@@ -704,16 +679,12 @@
                         "msg": {
                           "type": "string"
                         },
-                        "slug": {
-                          "type": "string"
-                        },
                         "name": {
                           "type": "string"
                         }
                       },
                       "required": [
                         "msg",
-                        "slug",
                         "name"
                       ]
                     }

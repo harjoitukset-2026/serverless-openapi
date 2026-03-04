@@ -1,8 +1,6 @@
-import { D1CreateEndpoint } from "chanfana";
-import { HandleArgs } from "../../types";
 import { TaskModel } from "./base";
 
-export class TaskCreate extends D1CreateEndpoint<HandleArgs> {
+export class TaskCreate {
 	_meta = {
 		model: TaskModel,
 		fields: TaskModel.schema.pick({

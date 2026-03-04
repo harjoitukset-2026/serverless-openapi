@@ -2,9 +2,9 @@ import { z } from "zod";
 
 export const task = z.object({
 	id: z.number().int(),
-	name: z.string(),
-	slug: z.string(),
-	description: z.string(),
+	name: z.string().min(1).openapi({ example: "Task doit" }),
+	slug: z.string().openapi({ example: "123" }),
+	description: z.string().openapi({ example: "Task doit" }),
 	completed: z.boolean(),
 	due_date: z.string().datetime(),
 });
