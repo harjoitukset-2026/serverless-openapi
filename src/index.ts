@@ -2,10 +2,12 @@ import { ApiException, fromHono } from "chanfana";
 import { Hono } from "hono";
 import { tasksRouter } from "./endpoints/tasks/router";
 import { ContentfulStatusCode } from "hono/utils/http-status";
-import { DummyEndpoint } from "./endpoints/dummyEndpoint";
 
+export type Env = {
+	MY_VAR: string;
+};
 // Start a Hono app
-const app = new Hono();
+const app = new Hono<{ Bindings: Env }>();
 
 app.onError((err, c) => {
 	if (err instanceof ApiException) {

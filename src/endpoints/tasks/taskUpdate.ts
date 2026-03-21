@@ -5,10 +5,17 @@ export class TaskUpdate {
 		model: TaskModel,
 		fields: TaskModel.schema.pick({
 			name: true,
-			slug: true,
 			description: true,
 			completed: true,
 			due_date: true,
 		}),
 	};
+}
+
+export async function taskUpdate(c) {
+	//const c = new JSON();
+	
+	return c.json({
+		success: true,
+	}, 201);
 }

@@ -129,6 +129,12 @@
                   "completed",
                   "due_date"
                 ]
+              },
+              "example": {
+                "name": "Write example JSON",
+                "description": "Implement taskCreate and test it",
+                "completed": false,
+                "due_date": "2026-04-01T12:00:00Z"
               }
             }
           }

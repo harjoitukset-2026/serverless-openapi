@@ -1,4 +1,4 @@
-# OpenAPI Template
+# Task REST API - Student Assignment
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/chanfana-openapi-template)
 
@@ -6,19 +6,15 @@
 
 <!-- dash-content-start -->
 
-This is a Cloudflare Worker with OpenAPI 3.1 Auto Generation and Validation using [chanfana](https://github.com/cloudflare/chanfana) and [Hono](https://github.com/honojs/hono).
+This is a student assignment project built with Cloudflare Workers, featuring a **Task Management REST API** with OpenAPI 3.1 Auto Generation and Validation using [chanfana](https://github.com/cloudflare/chanfana) and [Hono](https://github.com/honojs/hono).
 
-This is an example project made to be used as a quick start into building OpenAPI compliant Workers that generates the
-`openapi.json` schema automatically from code and validates the incoming request to the defined parameters or request body.
+Your assignment is to implement the API endpoint functions that respond to requests for managing tasks. The OpenAPI schema is automatically generated from your code, and all incoming requests are validated against the defined parameters and request body schemas. You can test your implementations directly using the OpenAPI interactive documentation.
 
-This template includes various endpoints, a D1 database, and integration tests using [Vitest](https://vitest.dev/) as examples. In endpoints, you will find [chanfana D1 AutoEndpoints](https://chanfana.com/endpoints/auto/d1) and a [normal endpoint](https://chanfana.com/endpoints/defining-endpoints) to serve as examples for your projects.
+This project includes example endpoint structures and integration tests using [Vitest](https://vitest.dev/) to guide your implementation. Your task is to complete the endpoint handlers in `src/endpoints/tasks/` to create, read, update, and delete tasks while adhering to the OpenAPI schema. Data is stored in memory for this assignment.
 
-Besides being able to see the OpenAPI schema (openapi.json) in the browser, you can also extract the schema locally no hassle by running this command `npm run schema`.
+You can view the generated OpenAPI schema in your browser at `/openapi.json`, or extract it locally by running `npm run schema`.
 
 <!-- dash-content-end -->
-
-> [!IMPORTANT]
-> When using C3 to create this project, select "no" when it asks if you want to deploy. You need to follow this project's [setup steps](https://github.com/cloudflare/templates/tree/main/openapi-template#setup-steps) before deploying.
 
 ## Getting Started
 
@@ -36,37 +32,42 @@ A live public deployment of this template is available at [https://openapi-templ
    ```bash
    npm install
    ```
-2. Create a [D1 database](https://developers.cloudflare.com/d1/get-started/) with the name "openapi-template-db":
+
+2. Deploy the project!
    ```bash
-   npx wrangler d1 create openapi-template-db
+   npm run deploy
    ```
-   ...and update the `database_id` field in `wrangler.json` with the new database ID.
-3. Run the following db migration to initialize the database (notice the `migrations` directory in this project):
+
+3. Monitor your worker
    ```bash
-   npx wrangler d1 migrations apply DB --remote
+   npm run tail
    ```
-4. Deploy the project!
-   ```bash
-   npx wrangler deploy
-   ```
-5. Monitor your worker
-   ```bash
-   npx wrangler tail
-   ```
+
+## Assignment: Implement Task API Endpoints
+
+Complete the following endpoint functions in `src/endpoints/tasks/`:
+- `taskList()` - List all tasks
+- `taskCreate()` - Create a new task
+- `taskRead()` - Get a single task by ID
+- `taskUpdate()` - Update a task
+- `taskDelete()` - Delete a task
+
+Each function must validate requests against the OpenAPI schema defined in `src/endpoints/tasks/base.ts`. Data persists in memory during the worker session.
 
 ## Testing
 
-This template includes integration tests using [Vitest](https://vitest.dev/). To run the tests locally:
+This template includes integration tests using [Vitest](https://vitest.dev/). To run the tests and verify your implementations:
 
 ```bash
 npm run test
 ```
 
-Test files are located in the `tests/` directory, with examples demonstrating how to test your endpoints and database interactions.
+Test files are located in the `tests/` directory. Use these as a guide to ensure your endpoint implementations work correctly.
 
-## Project structure
+## Project Structure
 
 1. Your main router is defined in `src/index.ts`.
-2. Each endpoint has its own file in `src/endpoints/`.
-3. Integration tests are located in the `tests/` directory.
-4. For more information read the [chanfana documentation](https://chanfana.com/), [Hono documentation](https://hono.dev/docs), and [Vitest documentation](https://vitest.dev/guide/).
+2. Task endpoint implementations belong in `src/endpoints/tasks/`.
+3. Task schema definitions are in `src/endpoints/tasks/base.ts`.
+4. Integration tests are located in the `tests/` directory.
+5. For more information read the [chanfana documentation](https://chanfana.com/), [Hono documentation](https://hono.dev/docs), and [Vitest documentation](https://vitest.dev/guide/).
