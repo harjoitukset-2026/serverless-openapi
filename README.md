@@ -1,84 +1,108 @@
-# Task REST API - Student Assignment
+# Tehtävä REST API - Opiskelijan harjoitustyö
 
+## Projektirakenne
+
+1. URL reititykset sijaitsevat tiedostossa `src/index.ts`.
+2. Tasks API rajapinnan toteutukset ovat kansiossa `src/endpoints/tasks/`.
+3. Tehtäväskeemat on määritelty tiedostossa `src/endpoints/tasks/base.ts`.
+4. Integraatiotestit löytyvät `tests/` kansiosta.
+5. Lisätietoja löytyy [chanfana-dokumentaatiosta](https://chanfana.com/), [Hono-dokumentaatiosta](https://hono.dev/docs) ja [Vitest-dokumentaatiosta](https://vitest.dev/guide/).
+
+
+```
 project/
 ├── src/
 │   ├── index.ts
 │   └── routes/
-│       └── createUser.ts
+│       └── taskCreate.ts
+│       └── taskDelete.ts
+│       └── taskList.ts
+│       └── taskRead.ts
+│       └── taskUpdate.ts
 ├── package.json
 └── tsconfig.json
+```
 
-
-![OpenAPI Template Preview](https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/91076b39-1f5b-46f6-7f14-536a6f183000/public)
+![OpenAPI Template Preview](Tasks_API.png)
 
 <!-- dash-content-start -->
 
-This is a student assignment project built with Cloudflare Workers, featuring a **Task Management REST API** with OpenAPI 3.1 Auto Generation and Validation using [chanfana](https://github.com/cloudflare/chanfana) and [Hono](https://github.com/honojs/hono).
+Tämä on OpenAPI dokumentaatio, joka on rakennettu **Cloudflare Workerien** avulla ja sisältää **Tehtävien hallinnan REST API:n** OpenAPI 3.1 -automaattisella generoinnilla ja validoinnilla käyttäen [chanfana](https://github.com/cloudflare/chanfana) ja [Hono](https://github.com/honojs/hono) kirjastoja.
 
-Your assignment is to implement the API endpoint functions that respond to requests for managing tasks. The OpenAPI schema is automatically generated from your code, and all incoming requests are validated against the defined parameters and request body schemas. You can test your implementations directly using the OpenAPI interactive documentation.
+Tehtäväsi on toteuttaa API-päätepisteiden funktiot, jotka vastaavat pyyntöihin tehtävien hallinnassa. OpenAPI-skeema generoidaan automaattisesti koodistasi, ja kaikki sisääntulevat pyynnöt validoidaan määriteltyjen parametrien ja request body -skeemojen mukaisesti. Voit testata toteutuksiasi suoraan OpenAPI:n interaktiivisen dokumentaation kautta.
 
-This project includes example endpoint structures and integration tests using [Vitest](https://vitest.dev/) to guide your implementation. Your task is to complete the endpoint handlers in `src/endpoints/tasks/` to create, read, update, and delete tasks while adhering to the OpenAPI schema. Data is stored in memory for this assignment.
+Projekti sisältää esimerkkipäätepisterakenteita ja integraatiotestejä [Vitest](https://vitest.dev/) avulla, jotka auttavat sinua toteutuksessa. Tehtäväsi on täydentää päätepisteiden käsittelijät kansiossa `src/endpoints/tasks/` siten, että voit luoda, lukea, päivittää ja poistaa tehtäviä OpenAPI-skeemaa noudattaen. Tiedot tallennetaan muistissa tämän harjoituksen ajaksi.
 
-You can view the generated OpenAPI schema in your browser at `/openapi.json`, or extract it locally by running `npm run schema`.
+Voit tarkastella generoituja OpenAPI-skeemoja selaimessa osoitteessa `/openapi.json` tai poimia ne paikallisesti komennolla:
+
+```bash
+npm run schema
+```
 
 <!-- dash-content-end -->
 
-## Getting Started
 
-Outside of this repo, you can start a new project with this template using [C3](https://developers.cloudflare.com/pages/get-started/c3/) (the `create-cloudflare` CLI):
+
+## Asennusohjeet
+
+1. Asenna projektin riippuvuudet valitsemallasi paketinhallinnalla:
 
 ```bash
-npm create cloudflare@latest -- --template=cloudflare/templates/openapi-template
+npm install
 ```
 
-A live public deployment of this template is available at [https://openapi-template.templates.workers.dev](https://openapi-template.templates.workers.dev)
 
-## Setup Steps
+## Tehtävä 1: Toteuta Tehtävä-API:n Päätepisteet
 
-1. Install the project dependencies with a package manager of your choice:
-   ```bash
-   npm install
-   ```
+1. Täydennä seuraavat päätepisteiden funktiot kansiossa `src/endpoints/tasks/`:
 
-2. Deploy the project!
-   ```bash
-   npm run deploy
-   ```
+* `taskList()` - Listaa kaikki tehtävät
+* `taskCreate()` - Luo uusi tehtävä
+* `taskRead()` - Hae yksittäinen tehtävä ID:n perusteella
+* `taskUpdate()` - Päivitä tehtävä
+* `taskDelete()` - Poista tehtävä
 
-3. Monitor your worker
-   ```bash
-   npm run tail
-   ```
+Jokaisen funktion tulee validoida pyynnöt OpenAPI-skeeman mukaisesti, joka on määritelty tiedostossa `src/endpoints/tasks/base.ts`. Tiedot pysyvät muistissa workerin sessiosta riippuen.
 
-## Assignment: Implement Task API Endpoints
+## Tehtävä 2: Muuta projektin nimeä
 
-Complete the following endpoint functions in `src/endpoints/tasks/`:
-- `taskList()` - List all tasks
-- `taskCreate()` - Create a new task
-- `taskRead()` - Get a single task by ID
-- `taskUpdate()` - Update a task
-- `taskDelete()` - Delete a task
+1. Aloita harjoitus muuttamalla projektin nimi haluamaksesi tiedostossa `wrangler.jsonc`. Tämä auttaa tunnistamaan projektisi Cloudflare Workers -ympäristössä.
 
-Each function must validate requests against the OpenAPI schema defined in `src/endpoints/tasks/base.ts`. Data persists in memory during the worker session.
+2. Vie projekti käyttöön Cloudflaren palveluun (deploy):
 
-## Testing
+```bash
+npm run deploy
+```
 
-This template includes integration tests using [Vitest](https://vitest.dev/). To run the tests and verify your implementations:
+3. Seuraa workerin lokia:
+
+```bash
+npm run tail
+```
+
+## Testaus
+
+Tämä malli sisältää integraatiotestit käyttäen [Vitest](https://vitest.dev/). Testien ajaminen ja toteutusten tarkistaminen:
 
 ```bash
 npm run test
 ```
 
-Test files are located in the `tests/` directory. Use these as a guide to ensure your endpoint implementations work correctly.
-
-## Project Structure
-
-1. Your main router is defined in `src/index.ts`.
-2. Task endpoint implementations belong in `src/endpoints/tasks/`.
-3. Task schema definitions are in `src/endpoints/tasks/base.ts`.
-4. Integration tests are located in the `tests/` directory.
-5. For more information read the [chanfana documentation](https://chanfana.com/), [Hono documentation](https://hono.dev/docs), and [Vitest documentation](https://vitest.dev/guide/).
+Testitiedostot löytyvät `tests/` kansiosta. Käytä niitä apuna varmistaaksesi, että päätepisteiden toteutukset toimivat oikein.
 
 
-Here we used template
+---
+
+## Cloudflaren alkuperäinen template, johon harjoitus perustuu
+
+Tämän repositorion ulkopuolella voit aloittaa uuden projektin käyttäen tätä mallia [C3](https://developers.cloudflare.com/pages/get-started/c3/) -työkalulla (`create-cloudflare` CLI):
+
+```bash
+npm create cloudflare@latest -- --template=cloudflare/templates/openapi-template
+```
+
+Mallin julkinen live-versio löytyy osoitteesta: [https://openapi-template.templates.workers.dev](https://openapi-template.templates.workers.dev)
+
+Templaten voi laittaa omaan ympäristöön ajoon käyttämällä alla olevaa linkkiä:
+
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/chanfana-openapi-template)

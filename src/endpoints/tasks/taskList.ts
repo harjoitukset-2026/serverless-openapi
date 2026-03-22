@@ -46,7 +46,7 @@ export class TaskList extends OpenAPIRoute {
     const tasks = [
       {
         id: 1,
-        name: 'Write chapter 3',
+        name: 'Implement taskCreate',
         description: 'Implement taskCreate and test it',
         completed: false,
         due_date: '2026-04-01T12:00:00Z'
