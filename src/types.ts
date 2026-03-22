@@ -7,9 +7,5 @@ export type Task = {
   completed: boolean
 }
 
-export interface Env {
-  USERS_NOTIFICATION_CONFIG: KVNamespace;
-}
-
 export type AppContext = Context<{ Bindings: Env }>;
 export type HandleArgs = [AppContext];

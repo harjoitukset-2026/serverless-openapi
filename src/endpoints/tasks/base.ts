@@ -9,31 +9,32 @@ export const task = z.object({
 	due_date: z.string().datetime()
 });
 
-export class Task {
-    _meta = {
-        model: TaskModel,
-        fields: TaskModel.schema.pick({
-            // this is purposely missing the id, because users shouldn't be able to define it
-            name: true,
-            description: true,
-            completed: true,
-            due_date: true,
-        }),
-    };
+export interface Env {
+  TASKS_KV: KVNamespace;
 }
 
-export const TaskModel = {
-	tableName: "tasks",
-	primaryKeys: ["id"],
-	schema: task,
-	serializer: (obj: Record<string, string | number | boolean>) => {
-		return {
-			...obj,
-			completed: Boolean(obj.completed),
-		};
-	},
-	serializerObject: task,
-};
+export default {
+  async fetch(request, env, ctx): Promise<Response> {
+    try {
+      await env.TASKS_KV.put("user_2", "disabled");
+      const value = await env.TASKS_KV.get("user_2");
+      if (value === null) {
+        return new Response("Value not found", { status: 404 });
+      }
+      return new Response(value);
+    } catch (err) {
+      console.error(`KV returned error:`, err);
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : "An unknown error occurred when accessing KV storage";
+      return new Response(errorMessage, {
+        status: 500,
+        headers: { "Content-Type": "text/plain" },
+      });
+    }
+  },
+} satisfies ExportedHandler<Env>;
 
 export const createTask = task.omit({ id: true }).openapi({
   example: {

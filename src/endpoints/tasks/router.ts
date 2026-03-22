@@ -8,8 +8,8 @@ import { TaskDelete } from "./taskDelete";
 
 export const tasksRouter = fromHono(new Hono());
 
-tasksRouter.get("/", TaskList);
 tasksRouter.post("/", TaskCreate);
+tasksRouter.get("/", TaskList);
 tasksRouter.get("/:id", TaskRead);
 tasksRouter.put("/:id", TaskUpdate);
 tasksRouter.delete("/:id", TaskDelete);

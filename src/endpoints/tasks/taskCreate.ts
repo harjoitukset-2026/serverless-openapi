@@ -1,6 +1,5 @@
 import { OpenAPIRoute } from 'chanfana';
 import { z } from "zod";
-import { addTask } from './storage';
 
 export class TaskCreate extends OpenAPIRoute {
   schema = {
@@ -42,7 +41,7 @@ export class TaskCreate extends OpenAPIRoute {
               name: 'Implement taskCreate',
               description: 'Implement taskCreate and test it',
               completed: false,
-              due_date: '2026-04-02T12:00:00Z'
+              due_date: '2026-04-03T12:00:00Z'
             }
           }
         }
@@ -54,7 +53,7 @@ export class TaskCreate extends OpenAPIRoute {
   }
 
   async handle(c: any) {
-    // Safety check for request context   
+    // Safety check for request context  
     if (!c.req) {
       return c.status(400).json({
         success: false,
@@ -65,6 +64,7 @@ export class TaskCreate extends OpenAPIRoute {
     let body;
     try {
       body = await c.req.json();
+
     } catch (error) {
       return c.status(400).json({
         success: false,
@@ -75,7 +75,7 @@ export class TaskCreate extends OpenAPIRoute {
     // Minimal required validation (can be moved to schema middleware)
     for (const key of ['name', 'description', 'completed', 'due_date']) {
       if (body[key] === undefined) {
-        return c.status(400).json({
+        return c.json({
           success: false,
           errors: [{ code: 7001, message: `Missing ${key}`, path: ['body', key] }]
         });
@@ -90,6 +90,6 @@ export class TaskCreate extends OpenAPIRoute {
       due_date: body.due_date
     };
 
-    return c.status(201);
+    return c.json(createdTask)
   }
 }
