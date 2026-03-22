@@ -4,9 +4,8 @@
 
 1. URL reititykset sijaitsevat tiedostossa `src/index.ts`.
 2. Tasks API rajapinnan toteutukset ovat kansiossa `src/endpoints/tasks/`.
-3. Tehtäväskeemat on määritelty tiedostossa `src/endpoints/tasks/base.ts`.
-4. Integraatiotestit löytyvät `tests/` kansiosta.
-5. Lisätietoja löytyy [chanfana-dokumentaatiosta](https://chanfana.com/), [Hono-dokumentaatiosta](https://hono.dev/docs) ja [Vitest-dokumentaatiosta](https://vitest.dev/guide/).
+3. Integraatiotestit löytyvät `tests/` kansiosta.
+4. Lisätietoja löytyy [chanfana-dokumentaatiosta](https://chanfana.com/), [Hono-dokumentaatiosta](https://hono.dev/docs) ja [Vitest-dokumentaatiosta](https://vitest.dev/guide/).
 
 
 ```
@@ -42,11 +41,53 @@ Projekti sisältää esimerkkipäätepisterakenteita ja integraatiotestejä [Vit
 npm install
 ```
 
-Selvä! Tässä uusi kohta, joka kannattaa lisätä harjoitustyöhön ohjeistamaan opiskelijaa tutustumaan Cloudflare Workersin KV-template-projektiin ennen varsinaista tehtävää:
+2. Aja projekti paikallisesti. Palvelin avautuu osoitteessa [http://localhost:8787](http://127.0.0.1:8787)
+
+```bash
+npm run dev
+```
+
+3. Seuraa workerin lokia:
+
+```bash
+npm run tail
+```
 
 ---
 
-## Tehtävä 0: Tutustu KV-tutoriaali templateen (tätä käydään myös tunnilla)
+## Tehtävä 1: Toteuta Task API:n paluuarvot
+
+1. Täydennä seuraavat päätepisteiden funktiot kansiossa `src/endpoints/tasks/`:
+
+* `taskList()` - Listaa kaikki tehtävät
+* `taskCreate()` - Luo uusi tehtävä
+* `taskRead()` - Hae yksittäinen tehtävä ID:n perusteella
+* `taskUpdate()` - Päivitä tehtävä
+* `taskDelete()` - Poista tehtävä
+
+Jokaisen funktion tulee palauttaa testeissä kuvatut paluuarvot. Voit muuttaa joko paluuarvoa tai yksikkötestiä.
+
+2. Tämä malli sisältää integraatiotestit käyttäen [Vitest](https://vitest.dev/). Testien ajaminen ja toteutusten tarkistaminen:
+
+
+
+Testitiedostot löytyvät `tests/` kansiosta. Käytä niitä apuna varmistaaksesi, että päätepisteiden toteutukset toimivat oikein. 11 testiä on lähes valmiina tiedostossa:
+```
+tests/tasks.test.ts
+```
+
+### Testien suorittaminen
+
+Aja testit paikallisesti komennolla:
+
+```bash
+npm test
+```
+
+
+Arviointi perustuu siihen kuinka moni automaattisista testeistä menee läpi 11/11 -> 5
+
+## BONUS Tehtävä 2: Tutustu KV-tutoriaali templateen (tätä käydään myös tunnilla)
 
 Ennen kuin aloitat tehtävän tekemisen, on hyvä tutustua Cloudflare Workersin KV Storeen templaten avulla. Tämä antaa peruskäsityksen KV Storen käytöstä ja miten dataa voidaan tallentaa pysyvästi Workerissa. Ohje löytyy myös [Cloudflaren sivuilla](https://developers.cloudflare.com/kv/get-started).
 
@@ -87,7 +128,7 @@ npm run schema
 ```
 
 <!-- dash-content-end -->
-## Tehtävä 1: Toteuta Storage-funktiot
+## BONUS Tehtävä 3: Toteuta Storage-funktiot
 
 Luo tiedosto `src/endpoints/tasks/storage.ts` ja toteuta seuraavat funktiot:
 
@@ -109,19 +150,8 @@ export async function getTask(id: number) {
 Näiden funktioiden avulla API:n päätepisteet voivat hakea ja käsitellä tehtävädataa.
 
 
-## Tehtävä 2: Toteuta Tehtävä-API:n Päätepisteet
 
-1. Täydennä seuraavat päätepisteiden funktiot kansiossa `src/endpoints/tasks/`:
-
-* `taskList()` - Listaa kaikki tehtävät
-* `taskCreate()` - Luo uusi tehtävä
-* `taskRead()` - Hae yksittäinen tehtävä ID:n perusteella
-* `taskUpdate()` - Päivitä tehtävä
-* `taskDelete()` - Poista tehtävä
-
-Jokaisen funktion tulee validoida pyynnöt OpenAPI-skeeman mukaisesti, joka on määritelty tiedostossa `src/endpoints/tasks/base.ts`. Tiedot pysyvät muistissa workerin sessiosta riippuen.
-
-## Tehtävä 3: Muuta projektin nimeä
+## BONUS Tehtävä 4: Muuta projektin nimeä
 
 1. Aloita harjoitus muuttamalla projektin nimi haluamaksesi tiedostossa `wrangler.jsonc`. Tämä auttaa tunnistamaan projektisi Cloudflare Workers -ympäristössä.
 
