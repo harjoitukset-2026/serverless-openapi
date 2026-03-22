@@ -4,11 +4,35 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"compatibility_date": "2025-10-08",
+	"compatibility_date": "2026-03-22",
 	"main": "src/index.ts",
-	"name": "lively-math-af46",
+	"name": "serverless-openapi-worker",
 	"upload_source_maps": true,
 	"observability": {
 		"enabled": true
-	}
+	},
+  // KV Namespace -bindaukset
+  "kv_namespaces": [
+    {
+      "binding": "TASKS_KV",        // Koodi viittaa tähän nimellä `kv: KVNamespace`
+      "id": "OPENAPI_KV_NAMESPACE"  // Vaihda tähän KV Namespace ID, jonka sait luodessasi KV:n
+    }
+  ],
+
+  // Ympäristökohtaiset asetukset (valinnainen)
+  "env": {
+    "test": {
+      "name": "serverless-openapi-worker-test",
+      "kv_namespaces": [
+        {
+          "binding": "TASKS_KV",
+          "id": "OPENAPI_KV_NAMESPACE"
+        }
+      ]
+    }
+  },
+
+  "vars": {
+    "ENVIRONMENT": "test"
+  }	
 }

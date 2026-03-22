@@ -33,15 +33,6 @@ Tehtäväsi on toteuttaa API-päätepisteiden funktiot, jotka vastaavat pyyntöi
 
 Projekti sisältää esimerkkipäätepisterakenteita ja integraatiotestejä [Vitest](https://vitest.dev/) avulla, jotka auttavat sinua toteutuksessa. Tehtäväsi on täydentää päätepisteiden käsittelijät kansiossa `src/endpoints/tasks/` siten, että voit luoda, lukea, päivittää ja poistaa tehtäviä OpenAPI-skeemaa noudattaen. Tiedot tallennetaan muistissa tämän harjoituksen ajaksi.
 
-Voit tarkastella generoituja OpenAPI-skeemoja selaimessa osoitteessa `/openapi.json` tai poimia ne paikallisesti komennolla:
-
-```bash
-npm run schema
-```
-
-<!-- dash-content-end -->
-
-
 
 ## Asennusohjeet
 
@@ -51,8 +42,74 @@ npm run schema
 npm install
 ```
 
+Selvä! Tässä uusi kohta, joka kannattaa lisätä harjoitustyöhön ohjeistamaan opiskelijaa tutustumaan Cloudflare Workersin KV-template-projektiin ennen varsinaista tehtävää:
 
-## Tehtävä 1: Toteuta Tehtävä-API:n Päätepisteet
+---
+
+## Tehtävä 0: Tutustu KV-tutoriaali templateen (tätä käydään myös tunnilla)
+
+Ennen kuin aloitat tehtävän tekemisen, on hyvä tutustua Cloudflare Workersin KV Storeen templaten avulla. Tämä antaa peruskäsityksen KV Storen käytöstä ja miten dataa voidaan tallentaa pysyvästi Workerissa. Ohje löytyy myös [Cloudflaren sivuilla](https://developers.cloudflare.com/kv/get-started).
+
+1. Luo uusi projekti KV-tutoriaali templatea käyttäen:
+
+```bash
+npm create cloudflare@latest -- --template=kv-tutorial
+```
+
+2. Siirry projektihakemistoon ja asenna riippuvuudet:
+
+```bash
+cd kv-tutorial
+npm install
+```
+
+3. Käy läpi template-projektin rakenne:
+
+   * `index.ts` – entrypoint Workerille
+   * KV-get ja KV-put funktiot – esimerkit, miten data tallennetaan ja haetaan
+
+4. Aja paikallisesti:
+
+```bash
+npm run dev
+```
+
+5. Kun olet tutustunut templateen, voit siirtyä luomaan oman projektisi käyttäen OpenAPI-templatea ja injektoitua KV Storea harjoitustyössä.
+
+---
+
+Tämän avulla saat hyvän katsaukseen KV Store -logiikkaan ennen kuin alkaa kirjoittaa `storage.ts`-funktioita ja API-päätepisteitä.
+
+Voit tarkastella generoituja OpenAPI-skeemoja selaimessa osoitteessa `/openapi.json` tai poimia ne paikallisesti komennolla:
+
+```bash
+npm run schema
+```
+
+<!-- dash-content-end -->
+## Tehtävä 1: Toteuta Storage-funktiot
+
+Luo tiedosto `src/endpoints/tasks/storage.ts` ja toteuta seuraavat funktiot:
+
+```typescript
+async function readAll() {
+  // Toteuta tietojen lukeminen muistiin tai varastoon
+}
+
+export async function listTasks() {
+  return readAll();
+}
+
+export async function getTask(id: number) {
+  const tasks = await readAll();
+  // Lisää logiikka yksittäisen tehtävän hakemiseksi ID:n perusteella
+}
+```
+
+Näiden funktioiden avulla API:n päätepisteet voivat hakea ja käsitellä tehtävädataa.
+
+
+## Tehtävä 2: Toteuta Tehtävä-API:n Päätepisteet
 
 1. Täydennä seuraavat päätepisteiden funktiot kansiossa `src/endpoints/tasks/`:
 
@@ -64,7 +121,7 @@ npm install
 
 Jokaisen funktion tulee validoida pyynnöt OpenAPI-skeeman mukaisesti, joka on määritelty tiedostossa `src/endpoints/tasks/base.ts`. Tiedot pysyvät muistissa workerin sessiosta riippuen.
 
-## Tehtävä 2: Muuta projektin nimeä
+## Tehtävä 3: Muuta projektin nimeä
 
 1. Aloita harjoitus muuttamalla projektin nimi haluamaksesi tiedostossa `wrangler.jsonc`. Tämä auttaa tunnistamaan projektisi Cloudflare Workers -ympäristössä.
 

@@ -1,5 +1,6 @@
 import { OpenAPIRoute } from 'chanfana';
 import { z } from "zod";
+import { addTask } from './storage';
 
 export class TaskCreate extends OpenAPIRoute {
   schema = {
@@ -38,7 +39,7 @@ export class TaskCreate extends OpenAPIRoute {
             }),
             example: {
               id: 123,
-              name: 'Write chapter 3',
+              name: 'Implement taskCreate',
               description: 'Implement taskCreate and test it',
               completed: false,
               due_date: '2026-04-02T12:00:00Z'
@@ -53,11 +54,7 @@ export class TaskCreate extends OpenAPIRoute {
   }
 
   async handle(c: any) {
-    // Safety check for request context
-    const rawBody = await c.req.text();
-    console.log('Raw request body:', rawBody);
-
-    
+    // Safety check for request context   
     if (!c.req) {
       return c.status(400).json({
         success: false,
