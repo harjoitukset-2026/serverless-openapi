@@ -1,12 +1,8 @@
-import { ApiException, fromHono } from "chanfana";
+import { OpenAPIRoute, ApiException, fromHono } from "chanfana";
 import { Hono } from "hono";
 import { tasksRouter } from "./endpoints/tasks/router";
 import { ContentfulStatusCode } from "hono/utils/http-status";
 
-export type Env = {
-	MY_VAR: string;
-};
-// Start a Hono app
 const app = new Hono<{ Bindings: Env }>();
 
 app.onError((err, c) => {
@@ -30,20 +26,11 @@ app.onError((err, c) => {
 	);
 });
 
-// Setup OpenAPI registry
+// if you want custom openapi.json from the file:
 const openapi = fromHono(app, {
-	docs_url: "/",
-	schema: {
-		info: {
-			title: "Tasks API",
-			version: "1.0.0",
-			description: "This is the documentation for tasks API.",
-		},
-	},
+	docs_url: "/"
 });
 
-// Register Tasks Sub router
 openapi.route("/tasks", tasksRouter);
 
-// Export the Hono app
 export default app;

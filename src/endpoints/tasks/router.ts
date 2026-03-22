@@ -1,15 +1,15 @@
 import { Hono } from "hono";
 import { fromHono } from "chanfana";
-import { taskList } from "./taskList";
-import { taskCreate } from "./taskCreate";
-import { taskRead } from "./taskRead";
-import { taskUpdate } from "./taskUpdate";
-import { taskDelete } from "./taskDelete";
+import { TaskList } from "./taskList";
+import { TaskCreate } from "./taskCreate";
+import { TaskRead } from "./taskRead";
+import { TaskUpdate } from "./taskUpdate";
+import { TaskDelete } from "./taskDelete";
 
 export const tasksRouter = fromHono(new Hono());
 
-tasksRouter.get("/", taskList);
-tasksRouter.post("/", taskCreate);
-tasksRouter.get("/:id", taskRead);
-tasksRouter.put("/:id", taskUpdate);
-tasksRouter.delete("/:id", taskDelete);
+tasksRouter.get("/", TaskList);
+tasksRouter.post("/", TaskCreate);
+tasksRouter.get("/:id", TaskRead);
+tasksRouter.put("/:id", TaskUpdate);
+tasksRouter.delete("/:id", TaskDelete);

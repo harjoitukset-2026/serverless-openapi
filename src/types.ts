@@ -1,3 +1,5 @@
+import type { Context } from "hono";
+
 export type Task = {
   id: string
   name: string
@@ -5,4 +7,5 @@ export type Task = {
   completed: boolean
 }
 
-export const tasks: Task[] = []
+export type AppContext = Context<{ Bindings: Env }>;
+export type HandleArgs = [AppContext];

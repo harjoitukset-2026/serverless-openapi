@@ -3,8 +3,8 @@ import { z } from "zod";
 
 export const task = z.object({
 	id: z.number().int(),
-	name: z.string().min(1).openapi({ example: "Task doit" }),
-	description: z.string().openapi({ example: "Task doit" }),
+	name: z.string().min(1).openapi({ example: "Task do it" }),
+	description: z.string().openapi({ example: "Task do it" }),
 	completed: z.boolean(),
 	due_date: z.string().datetime()
 });

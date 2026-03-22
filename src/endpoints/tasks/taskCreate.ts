@@ -1,28 +1,98 @@
-import { task } from "./base";
+import { OpenAPIRoute } from 'chanfana';
 import { z } from "zod";
 
-const tasks: z.infer<typeof task>[] = [];
-
-const createTaskSchema = task.omit({ id: true });
-type CreateTaskBody = z.infer<typeof createTaskSchema>; // static typed attributes
-
-export async function taskCreate(c) {
-  let body: CreateTaskBody;
-
-  try {
-    body = (await c.req.json()) as CreateTaskBody;
-  } catch {
-    return c.json({ success: false, error: "Invalid or missing JSON body" }, 400);
+export class TaskCreate extends OpenAPIRoute {
+  schema = {
+    summary: 'Create Task',
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: z.object({
+              name: z.string(),
+              description: z.string(),
+              completed: z.boolean(),
+              due_date: z.string().datetime()  // Assuming ISO date-time format
+            }),
+            example: {
+              name: 'Create schema JSON file',
+              description: 'Implement schema JSON file and test it',
+              completed: false,
+              due_date: '2026-04-01T12:00:00Z'
+            }
+          }
+        }
+      }
+    },
+    responses: {
+      201: {
+        description: 'Task created',
+        content: {
+          'application/json': {
+            schema: z.object({
+              id: z.number(),
+              name: z.string(),
+              description: z.string(),
+              completed: z.boolean(),
+              due_date: z.string().datetime()
+            }),
+            example: {
+              id: 123,
+              name: 'Write chapter 3',
+              description: 'Implement taskCreate and test it',
+              completed: false,
+              due_date: '2026-04-02T12:00:00Z'
+            }
+          }
+        }
+      },
+      400: {
+        description: 'Bad Request'
+      }
+    }    
   }
 
-  const parsed = createTaskSchema.safeParse(body);
-  if (!parsed.success) {
-    return c.json({ success: false, error: parsed.error.format() }, 400);
+  async handle(c: any) {
+    // Safety check for request context
+    const rawBody = await c.req.text();
+    console.log('Raw request body:', rawBody);
+
+    
+    if (!c.req) {
+      return c.status(400).json({
+        success: false,
+        errors: [{ code: 7000, message: 'Invalid request context' }]
+      });
+    }
+
+    let body;
+    try {
+      body = await c.req.json();
+    } catch (error) {
+      return c.status(400).json({
+        success: false,
+        errors: [{ code: 7002, message: 'Invalid JSON in request body' }]
+      });
+    }
+
+    // Minimal required validation (can be moved to schema middleware)
+    for (const key of ['name', 'description', 'completed', 'due_date']) {
+      if (body[key] === undefined) {
+        return c.status(400).json({
+          success: false,
+          errors: [{ code: 7001, message: `Missing ${key}`, path: ['body', key] }]
+        });
+      }
+    }
+
+    const createdTask = {
+      id: 123, // Or real persistence ID
+      name: body.name,
+      description: body.description,
+      completed: body.completed,
+      due_date: body.due_date
+    };
+
+    return c.status(201);
   }
-
-  const nextId = tasks.length > 0 ? Math.max(...tasks.map((t) => t.id)) + 1 : 1;
-  const newTask = { id: nextId, ...parsed.data };
-  tasks.push(newTask);
-
-  return c.json({ success: true, result: newTask }, 201);
 }

@@ -1,6 +1,13 @@
 # Task REST API - Student Assignment
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/chanfana-openapi-template)
+project/
+├── src/
+│   ├── index.ts
+│   └── routes/
+│       └── createUser.ts
+├── package.json
+└── tsconfig.json
+
 
 ![OpenAPI Template Preview](https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/91076b39-1f5b-46f6-7f14-536a6f183000/public)
 
@@ -71,3 +78,7 @@ Test files are located in the `tests/` directory. Use these as a guide to ensure
 3. Task schema definitions are in `src/endpoints/tasks/base.ts`.
 4. Integration tests are located in the `tests/` directory.
 5. For more information read the [chanfana documentation](https://chanfana.com/), [Hono documentation](https://hono.dev/docs), and [Vitest documentation](https://vitest.dev/guide/).
+
+
+Here we used template
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/chanfana-openapi-template)
