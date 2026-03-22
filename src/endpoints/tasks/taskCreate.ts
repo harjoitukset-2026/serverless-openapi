@@ -90,6 +90,9 @@ export class TaskCreate extends OpenAPIRoute {
       due_date: body.due_date
     };
 
-    return c.json(createdTask)
+    return c.json({
+      success: true,
+      result: createdTask
+    });
   }
 }

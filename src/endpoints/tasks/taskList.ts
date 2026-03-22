@@ -64,6 +64,9 @@ export class TaskList extends OpenAPIRoute {
       return c.status(404).json({ error: 'No tasks found' });
     }
 
-    return c.json(tasks);
+    return c.json({
+      success: true,
+      result: tasks
+    });
   }
 }

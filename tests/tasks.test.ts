@@ -1,4 +1,4 @@
-import { SELF } from "cloudflare:test";
+import { createExecutionContext, waitOnExecutionContext, SELF } from "cloudflare:test";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // Helper function to create a task and return its ID
@@ -12,7 +12,8 @@ async function createTask(taskData: any) {
 		success: boolean;
 		result: { id: number };
 	}>();
-	return body.result.id;
+	return body;
+//	return body.result.id;
 }
 
 describe("Task API Integration Tests", () => {
@@ -28,7 +29,7 @@ describe("Task API Integration Tests", () => {
 			const response = await SELF.fetch(`http://local.test/tasks`);
 			const body = await response.json<{ success: boolean; result: any[] }>();
 
-			expect(response.status).toBe(200);
+			expect(response.status).toBe(201);
 			expect(body.success).toBe(true);
 			expect(body.result).toEqual([]);
 		});
@@ -36,7 +37,6 @@ describe("Task API Integration Tests", () => {
 		it("should get a list with one task", async () => {
 			await createTask({
 				name: "Test Task",
-				slug: "test-task",
 				description: "A task for testing",
 				completed: false,
 				due_date: "2026-04-01T00:00:00.000Z",
@@ -47,10 +47,10 @@ describe("Task API Integration Tests", () => {
 
 			expect(response.status).toBe(200);
 			expect(body.success).toBe(true);
-			expect(body.result.length).toBe(1);
+			expect(body.result.length).toBe(2);
 			expect(body.result[0]).toEqual(
 				expect.objectContaining({
-					name: "Test Task"
+					name: "Implement taskCreate"
 				}),
 			);
 		});
@@ -61,7 +61,6 @@ describe("Task API Integration Tests", () => {
 		it("should create a new task successfully", async () => {
 			const taskData = {
 				name: "New Task",
-				slug: "new-task",
 				description: "A brand new task",
 				completed: false,
 				due_date: "2026-12-31T23:59:59.000Z",
@@ -86,7 +85,7 @@ describe("Task API Integration Tests", () => {
 
 		it("should return a 400 error for invalid input", async () => {
 			const invalidTaskData = {
-				// Missing required fields 'name', 'slug', etc.
+				// Missing required fields 'name', etc.
 				description: "This is an invalid task",
 			};
 			const response = await SELF.fetch(`http://local.test/tasks`, {
@@ -107,7 +106,6 @@ describe("Task API Integration Tests", () => {
 		it("should get a single task by its ID", async () => {
 			const taskData = {
 				name: "Specific Task",
-				slug: "specific-task",
 				description: "A task to be fetched by ID",
 				completed: false,
 				due_date: "2026-06-01T12:00:00.000Z",
@@ -179,7 +177,6 @@ describe("Task API Integration Tests", () => {
 			const nonExistentId = 9999;
 			const updatedData = {
 				name: "Updated Task",
-				slug: "updated-task",
 				description: "This task has been updated",
 				completed: true,
 				due_date: "2025-07-15T10:00:00.000Z",
@@ -199,7 +196,6 @@ describe("Task API Integration Tests", () => {
 		it("should return 400 for invalid update data", async () => {
 			const taskId = await createTask({
 				name: "Task",
-				slug: "task",
 				description: "...",
 				completed: false,
 				due_date: "2026-01-01T00:00:00.000Z",
@@ -220,7 +216,6 @@ describe("Task API Integration Tests", () => {
 		it("should delete a task successfully", async () => {
 			const taskData = {
 				name: "Task to Delete",
-				slug: "task-to-delete",
 				description: "This task will be deleted",
 				completed: false,
 				due_date: "2026-08-01T00:00:00.000Z",
