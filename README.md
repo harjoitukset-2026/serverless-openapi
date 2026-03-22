@@ -5,7 +5,7 @@
 1. URL reititykset sijaitsevat tiedostossa `src/index.ts`.
 2. Tasks API rajapinnan toteutukset ovat kansiossa `src/endpoints/tasks/`.
 3. Integraatiotestit löytyvät `tests/` kansiosta.
-4. Lisätietoja löytyy [chanfana-dokumentaatiosta](https://chanfana.com/), [Hono-dokumentaatiosta](https://hono.dev/docs) ja [Vitest-dokumentaatiosta](https://vitest.dev/guide/).
+4. Lisätietoja löytyy [chanfana-dokumentaatiosta](https://chanfana.pages.dev/), [Hono-dokumentaatiosta](https://hono.dev/docs) ja [Vitest-dokumentaatiosta](https://vitest.dev/guide/).
 
 
 ```
