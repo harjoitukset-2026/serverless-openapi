@@ -1,4 +1,4 @@
-# Tehtävä REST API - Opiskelijan harjoitustyö
+# 9. Tehtävä Serverless OpenAPI - REST API dokumentointi
 
 ## Projektirakenne
 
