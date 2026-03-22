@@ -167,17 +167,6 @@ npm run deploy
 npm run tail
 ```
 
-## Testaus
-
-Tämä malli sisältää integraatiotestit käyttäen [Vitest](https://vitest.dev/). Testien ajaminen ja toteutusten tarkistaminen:
-
-```bash
-npm run test
-```
-
-Testitiedostot löytyvät `tests/` kansiosta. Käytä niitä apuna varmistaaksesi, että päätepisteiden toteutukset toimivat oikein.
-
-
 ---
 
 ## Cloudflaren alkuperäinen template, johon harjoitus perustuu
