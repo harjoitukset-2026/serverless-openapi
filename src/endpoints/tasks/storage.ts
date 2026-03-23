@@ -4,7 +4,7 @@ declare const TASKS_KV: KVNamespace;
 
 async function readAll() {
   try {
-    const data = await env.TASKS_KV.get('tasks');
+    const data = await TASKS_KV.get('tasks');
     return data ? JSON.parse(data) : [];
   } catch (err) {
     // If KV isn't found

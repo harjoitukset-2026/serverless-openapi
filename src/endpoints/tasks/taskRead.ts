@@ -61,6 +61,9 @@ export class TaskRead extends OpenAPIRoute {
         due_date: '2026-04-01T12:00:00Z'
       };
 
-    return c.json(task);
+    return c.json({
+      success: true,
+      result: task
+    });
   }
 }
