@@ -1,6 +1,7 @@
 import { OpenAPIRoute } from 'chanfana';
 import { task } from './base';
 import { z } from 'zod';
+import { AppContext } from '../../types';
 
 const updateTaskSchema = task.omit({ id: true }); // All fields optional for partial update
 
@@ -67,8 +68,8 @@ export class TaskUpdate extends OpenAPIRoute {
     }
   }
 
-  async handle(c: any) {
-    const id = parseInt(c.req.param('id'));
+  async handle(c: AppContext) {
+    const id = parseInt(c.req.param('id')!);
     if (isNaN(id)) {
       return c.json({ error: 'Invalid ID' }, 400);
     }

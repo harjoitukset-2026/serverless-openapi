@@ -1,5 +1,6 @@
-import type { D1Migration } from "cloudflare:test";
+/// <reference types="@cloudflare/vitest-pool-workers/types" />
+import "cloudflare:test";
 
 declare module "cloudflare:test" {
-	interface ProvidedEnv extends Env {}
+	interface ProvidedEnv extends Env { }
 }
