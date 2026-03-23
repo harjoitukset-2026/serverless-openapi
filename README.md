@@ -47,12 +47,6 @@ npm install
 npm run dev
 ```
 
-3. Seuraa workerin lokia:
-
-```bash
-npm run tail
-```
-
 ---
 
 ## Tehtävä 1: Toteuta Task API:n paluuarvot
