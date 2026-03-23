@@ -1,5 +1,6 @@
 import { OpenAPIRoute } from 'chanfana';
 import { z } from "zod";
+import { AppContext } from '../../types';
 
 export class TaskRead extends OpenAPIRoute {
   schema = {
@@ -46,8 +47,8 @@ export class TaskRead extends OpenAPIRoute {
     }
   }
 
-  async handle(c: any) {
-    const id = parseInt(c.req.param('id'));
+  async handle(c: AppContext) {
+    const id = parseInt(c.req.param('id')!);
     if (isNaN(id)) {
       return c.json({ error: 'Invalid ID' }, 400);
     }

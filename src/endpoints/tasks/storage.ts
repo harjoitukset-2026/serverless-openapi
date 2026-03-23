@@ -1,10 +1,8 @@
 import { env } from 'cloudflare:workers';
-// KV namespace on injektoitu työn ympäristöön
-declare const TASKS_KV: KVNamespace;
 
 async function readAll() {
   try {
-    const data = await TASKS_KV.get('tasks');
+    const data = await env.TASKS_KV.get('tasks');
     return data ? JSON.parse(data) : [];
   } catch (err) {
     // If KV isn't found
@@ -24,7 +22,7 @@ export async function getTask(id: number) {
 export async function addTask(task: any) {
   const tasks = await readAll();
   tasks.push(task);
-  await TASKS_KV.put('tasks', JSON.stringify(tasks));
+  await env.TASKS_KV.put('tasks', JSON.stringify(tasks));
 }
 
 export async function updateTask(id: number, updatedTask: any) {
@@ -32,12 +30,12 @@ export async function updateTask(id: number, updatedTask: any) {
   const index = tasks.findIndex((t: { id: number; }) => t.id === id);
   if (index !== -1) {
     tasks[index] = { ...tasks[index], ...updatedTask };
-    await TASKS_KV.put('tasks', JSON.stringify(tasks));
+    await env.TASKS_KV.put('tasks', JSON.stringify(tasks));
   }
 }
 
 export async function deleteTask(id: number) {
   let tasks = await readAll();
   tasks = tasks.filter((t: { id: number; }) => t.id !== id);
-  await TASKS_KV.put('tasks', JSON.stringify(tasks));
+  await env.TASKS_KV.put('tasks', JSON.stringify(tasks));
 }

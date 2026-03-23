@@ -47,12 +47,6 @@ npm install
 npm run dev
 ```
 
-3. Seuraa workerin lokia:
-
-```bash
-npm run tail
-```
-
 ---
 
 ## Tehtävä 1: Toteuta Task API:n paluuarvot
@@ -177,7 +171,7 @@ Tämän repositorion ulkopuolella voit aloittaa uuden projektin käyttäen tät�
 npm create cloudflare@latest -- --template=cloudflare/templates/openapi-template
 ```
 
-Mallin julkinen live-versio löytyy osoitteesta: [https://openapi-template.templates.workers.dev](https://openapi-template.templates.workers.dev)
+Mallin julkinen live-versio löytyy osoitteesta: https://github.com/cloudflare/templates/tree/main/chanfana-openapi-template
 
 Templaten voi laittaa omaan ympäristöön ajoon käyttämällä alla olevaa linkkiä:
 
