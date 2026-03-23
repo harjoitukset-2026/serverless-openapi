@@ -1,14 +1,8 @@
 import { env } from 'cloudflare:workers';
-// KV namespace on injektoitu työn ympäristöön
 
 async function readAll() {
-  try {
-    const data = await env.TASKS_KV.get('tasks');
-    return data ? JSON.parse(data) : [];
-  } catch (err) {
-    // If KV isn't found
-    return [];
-  }
+  const data = await env.TASKS_KV.get('tasks');
+  return data ? JSON.parse(data) : [];
 }
 
 async function writeAll(tasks: any[]) {
