@@ -1,5 +1,6 @@
 import { OpenAPIRoute } from 'chanfana';
 import { z } from "zod";
+import { AppContext } from '../../types';
 
 export class TaskCreate extends OpenAPIRoute {
   schema = {
@@ -49,16 +50,16 @@ export class TaskCreate extends OpenAPIRoute {
       400: {
         description: 'Bad Request'
       }
-    }    
+    }
   }
 
-  async handle(c: any) {
+  async handle(c: AppContext) {
     // Safety check for request context  
     if (!c.req) {
-      return c.status(400).json({
+      return c.json({
         success: false,
         errors: [{ code: 7000, message: 'Invalid request context' }]
-      });
+      }, 400);
     }
 
     let body;
@@ -66,10 +67,10 @@ export class TaskCreate extends OpenAPIRoute {
       body = await c.req.json();
 
     } catch (error) {
-      return c.status(400).json({
+      return c.json({
         success: false,
         errors: [{ code: 7002, message: 'Invalid JSON in request body' }]
-      });
+      }, 400);
     }
 
     // Minimal required validation (can be moved to schema middleware)
@@ -78,7 +79,7 @@ export class TaskCreate extends OpenAPIRoute {
         return c.json({
           success: false,
           errors: [{ code: 7001, message: `Missing ${key}`, path: ['body', key] }]
-        });
+        }, 400);
       }
     }
 

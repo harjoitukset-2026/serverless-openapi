@@ -1,5 +1,6 @@
-import { OpenAPIRoute } from 'chanfana'
+import { OpenAPIRoute } from 'chanfana';
 import { z } from "zod";
+import { AppContext } from '../../types';
 
 export class TaskList extends OpenAPIRoute {
   schema = {
@@ -41,7 +42,7 @@ export class TaskList extends OpenAPIRoute {
     }
   };
 
-  async handle(c: any) {
+  async handle(c: AppContext) {
     // Mock list of tasks (replace with real data fetching logic)
     const tasks = [
       {
@@ -59,10 +60,6 @@ export class TaskList extends OpenAPIRoute {
         due_date: '2026-04-02T12:00:00Z'
       }
     ];
-
-    if (tasks.length === 0) {
-      return c.status(404).json({ error: 'No tasks found' });
-    }
 
     return c.json({
       success: true,
