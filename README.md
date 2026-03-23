@@ -171,7 +171,7 @@ Tämän repositorion ulkopuolella voit aloittaa uuden projektin käyttäen tät�
 npm create cloudflare@latest -- --template=cloudflare/templates/openapi-template
 ```
 
-Mallin julkinen live-versio löytyy osoitteesta: [https://openapi-template.templates.workers.dev](https://openapi-template.templates.workers.dev)
+Mallin julkinen live-versio löytyy osoitteesta: https://github.com/cloudflare/templates/tree/main/chanfana-openapi-template
 
 Templaten voi laittaa omaan ympäristöön ajoon käyttämällä alla olevaa linkkiä:
 
