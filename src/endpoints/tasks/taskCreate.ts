@@ -94,6 +94,6 @@ export class TaskCreate extends OpenAPIRoute {
     return c.json({
       success: true,
       result: createdTask
-    });
+    }, 201);
   }
 }
