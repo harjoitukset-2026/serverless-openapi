@@ -1,4 +1,4 @@
-import { createExecutionContext, waitOnExecutionContext, SELF } from "cloudflare:test";
+import { SELF } from "cloudflare:test";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // Helper function to create a task and return its ID
@@ -13,7 +13,6 @@ async function createTask(taskData: any) {
 		result: { id: number };
 	}>();
 	return body;
-//	return body.result.id;
 }
 
 describe("Task API Integration Tests", () => {
