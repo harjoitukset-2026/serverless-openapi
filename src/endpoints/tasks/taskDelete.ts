@@ -62,6 +62,9 @@ export class TaskDelete extends OpenAPIRoute {
         due_date: '2026-04-01T12:00:00Z'
       };
 
-    return c.json(deletedTask);
+    return c.json({
+      success: true,
+      result: deletedTask
+    });
   }
 }

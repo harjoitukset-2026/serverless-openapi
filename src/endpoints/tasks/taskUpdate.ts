@@ -90,6 +90,9 @@ export class TaskUpdate extends OpenAPIRoute {
       ...parsed.data
     }    
 
-    return c.json(updatedTask);  // Return the updated task object
+    return c.json({
+      success: true,
+      result: updatedTask
+    });
   }
 }
