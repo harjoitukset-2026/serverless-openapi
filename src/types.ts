@@ -1,7 +1,7 @@
 import type { Context } from "hono";
 
 export type Task = {
-  id: string
+  id: number
   name: string
   description: string
   completed: boolean

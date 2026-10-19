@@ -1,6 +1,7 @@
 import { OpenAPIRoute } from 'chanfana';
 import { z } from "zod";
 import { AppContext } from '../../types';
+import { addTask } from './storage';
 
 export class TaskCreate extends OpenAPIRoute {
   schema = {
@@ -83,17 +84,19 @@ export class TaskCreate extends OpenAPIRoute {
       }
     }
 
+    /*
     const createdTask = {
       id: 123, // Or real persistence ID
       name: body.name,
       description: body.description,
       completed: body.completed,
       due_date: body.due_date
-    };
+    };*/
+    await addTask(c.env, body);
 
     return c.json({
       success: true,
-      result: createdTask
+      result: body
     }, 201);
   }
 }

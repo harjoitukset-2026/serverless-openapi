@@ -29,7 +29,7 @@
 		"zod": "^3.25.67"
 	},
 	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.13.3",
+		"@cloudflare/vitest-plugin": "^1.4.4",
 		"@types/node": "24.0.4",
 		"typescript": "5.8.3",
 		"vitest": "^4.1.0",
