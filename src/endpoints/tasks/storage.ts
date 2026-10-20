@@ -8,7 +8,7 @@ async function nextId(env: Env) {
   return next;
 }
 
-async function readAll(env: Env) {
+export async function readAll(env: Env) {
   try {
     const data = await env.TASKS_KV.get('tasks');
     return data ? JSON.parse(data) : [];
