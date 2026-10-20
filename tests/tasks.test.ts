@@ -1,5 +1,7 @@
-import { SELF } from "cloudflare:test";
+import { env, SELF } from "cloudflare:test";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { addTask, getTask } from "../src/endpoints/tasks/storage";
+import { Task } from "../src/types";
 
 // Helper function to create a task and return its ID
 async function createTask(taskData: any) {
@@ -38,7 +40,7 @@ describe("Task API Integration Tests", () => {
 				name: "Test Task",
 				description: "A task for testing",
 				completed: false,
-				due_date: "2026-04-01T00:00:00.000Z",
+				due_date: "2030-12-31T23:59:59.000Z",
 			});
 
 			const response = await SELF.fetch(`http://local.test/tasks`);
@@ -107,7 +109,7 @@ describe("Task API Integration Tests", () => {
 				name: "Specific Task",
 				description: "A task to be fetched by ID",
 				completed: false,
-				due_date: "2026-06-01T12:00:00.000Z",
+				due_date: "2030-12-31T23:59:59.000Z"
 			};
 			// fixme: createTask does not return the id
 			const taskId = await createTask(taskData);
