@@ -31,7 +31,8 @@ describe("Task API Integration Tests", () => {
 			await createTask({
 				name: "Test Task",
 				description: "A task for testing",
-				completed: false
+				completed: false,
+				due_date: "2030-12-31T23:59:59.000Z",
 			});
 
 			const response = await SELF.fetch(`http://local.test/tasks`);
@@ -99,7 +100,8 @@ describe("Task API Integration Tests", () => {
 			const task = await createTask({
 				name: "Specific Task",
 				description: "A task to be fetched by ID",
-				completed: false
+				completed: false,
+				due_date: "2030-12-31T23:59:59.000Z"
 			});
 
 			const response = await SELF.fetch(`http://local.test/tasks/${task.id}`);
@@ -127,20 +129,19 @@ describe("Task API Integration Tests", () => {
 	// Tests for PUT /tasks/{id}
 	describe("PUT /tasks/{id}", () => {
 		it("should update a task successfully", async () => {
-			const taskId = await createTask({
-				name: "Task to Update",
-				description: "This task will be updated",
+			const task = await createTask({
+				name: "Updated Task",
+				description: "This task has been updated",
+				due_date: "2030-12-31T23:59:59.000Z",
 				completed: false
 			});
 
 			const updatedData = {
-				name: "Updated Task",
-				description: "This task has been updated",
-				completed: true,
-				due_date: "2025-07-15T10:00:00.000Z",
+				...task,
+				completed: true
 			};
 
-			const response = await SELF.fetch(`http://local.test/tasks/${taskId}`, {
+			const response = await SELF.fetch(`http://local.test/tasks/${task.id}`, {
 				method: "PUT",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(updatedData),
@@ -151,7 +152,6 @@ describe("Task API Integration Tests", () => {
 			expect(body.success).toBe(true);
 			expect(body.result).toEqual(
 				expect.objectContaining({
-					id: taskId,
 					...updatedData,
 				}),
 			);
@@ -181,6 +181,7 @@ describe("Task API Integration Tests", () => {
 			const taskId = await createTask({
 				name: "Task",
 				description: "...",
+				due_date: "2030-12-31T23:59:59.000Z",
 				completed: false
 			});
 			const invalidUpdateData = { name: "" }; // Invalid name

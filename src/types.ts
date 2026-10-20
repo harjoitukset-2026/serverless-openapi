@@ -5,6 +5,7 @@ export type Task = {
   name: string
   description: string
   completed: boolean
+  due_date: string
 }
 
 export type AppContext = Context<{ Bindings: Env }>;
