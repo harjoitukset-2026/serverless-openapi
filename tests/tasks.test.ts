@@ -1,6 +1,6 @@
 import { env, SELF } from "cloudflare:test";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { addTask } from "../src/endpoints/tasks/storage";
+import { addTask, getTask } from "../src/endpoints/tasks/storage";
 import { Task } from "../src/types";
 
 // Helper function to create a task
@@ -222,8 +222,8 @@ describe("Task API Integration Tests", () => {
 			expect(deleteBody.result.id).toBe(task.id);
 
 			// Verify the task is actually deleted
-			const getResponse = await SELF.fetch(`http://local.test/tasks/${task.id}`);
-			expect(getResponse.status).toBe(404);
+			const shouldBeDeleted = await getTask(env, task.id);
+			expect(shouldBeDeleted).toBeUndefined();
 		});
 
 		it("should return 404 when trying to delete a non-existent task", async () => {

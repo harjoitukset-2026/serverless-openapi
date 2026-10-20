@@ -1,4 +1,3 @@
-import { env } from 'cloudflare:workers';
 import { Task } from "../../types";
 
 async function nextId(env: Env) {
@@ -23,7 +22,7 @@ async function writeAll(env: Env, tasks: Task[]) {
   await env.TASKS_KV.put('tasks', JSON.stringify(tasks));
 }
 
-export async function getTask(env: Env, id: number) {
+export async function getTask(env: Env, id: number): Promise<Task | undefined> {
   const tasks = await readAll(env);
   return tasks.find((t: { id: number; }) => t.id === id);
 }
@@ -32,6 +31,7 @@ export async function addTask(env: Env, task: Task) {
   task.id = await nextId(env);
   const tasks = (await readAll(env)).concat(task);
   await writeAll(env, tasks);
+  return task.id;
 }
 
 export async function updateTask(env: Env, updatedTask: any) {
