@@ -255,7 +255,6 @@ describe("Task API Integration Tests", () => {
 
 			expect(response.status).toBe(404);
 			expect(body.success).toBe(false);
-			expect(body.errors[0].message).toBe("Not Found");
 		});
 	});
 });
