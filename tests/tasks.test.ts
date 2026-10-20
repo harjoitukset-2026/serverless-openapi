@@ -178,14 +178,14 @@ describe("Task API Integration Tests", () => {
 		});
 
 		it("should return 400 for invalid update data", async () => {
-			const taskId = await createTask({
+			const task = await createTask({
 				name: "Task",
 				description: "...",
 				due_date: "2030-12-31T23:59:59.000Z",
 				completed: false
 			});
 			const invalidUpdateData = { name: "" }; // Invalid name
-			const response = await SELF.fetch(`http://local.test/tasks/${taskId}`, {
+			const response = await SELF.fetch(`http://local.test/tasks/${task.id}`, {
 				method: "PUT",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(invalidUpdateData),
