@@ -1,18 +1,12 @@
-import { SELF } from "cloudflare:test";
+import { env, SELF } from "cloudflare:test";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { addTask } from "../src/endpoints/tasks/storage";
+import { Task } from "../src/types";
 
-// Helper function to create a task and return its ID
-async function createTask(taskData: any) {
-	const response = await SELF.fetch(`http://local.test/tasks`, {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(taskData),
-	});
-	const body = await response.json<{
-		success: boolean;
-		result: { id: number };
-	}>();
-	return body;
+// Helper function to create a task
+async function createTask(taskData: Omit<Task, "id">): Promise<Task> {
+	const id = await addTask(env, { ...taskData, id: -1 }); // Use a placeholder ID; the actual ID will be assigned in addTask
+	return { ...taskData, id };
 }
 
 describe("Task API Integration Tests", () => {
@@ -37,8 +31,7 @@ describe("Task API Integration Tests", () => {
 			await createTask({
 				name: "Test Task",
 				description: "A task for testing",
-				completed: false,
-				due_date: "2026-04-01T00:00:00.000Z",
+				completed: false
 			});
 
 			const response = await SELF.fetch(`http://local.test/tasks`);
@@ -103,25 +96,19 @@ describe("Task API Integration Tests", () => {
 	// Tests for GET /tasks/{id}
 	describe("GET /tasks/{id}", () => {
 		it("should get a single task by its ID", async () => {
-			const taskData = {
+			const task = await createTask({
 				name: "Specific Task",
 				description: "A task to be fetched by ID",
-				completed: false,
-				due_date: "2026-06-01T12:00:00.000Z",
-			};
-			// fixme: createTask does not return the id
-			const taskId = await createTask(taskData);
+				completed: false
+			});
 
-			const response = await SELF.fetch(`http://local.test/tasks/${taskId}`);
+			const response = await SELF.fetch(`http://local.test/tasks/${task.id}`);
 			const body = await response.json<{ success: boolean; result: any }>();
 
 			expect(response.status).toBe(200);
 			expect(body.success).toBe(true);
 			expect(body.result).toEqual(
-				expect.objectContaining({
-					id: taskId,
-					...taskData,
-				}),
+				expect.objectContaining(task),
 			);
 		});
 
@@ -141,14 +128,11 @@ describe("Task API Integration Tests", () => {
 	// Tests for PUT /tasks/{id}
 	describe("PUT /tasks/{id}", () => {
 		it("should update a task successfully", async () => {
-			const taskData = {
+			const taskId = await createTask({
 				name: "Task to Update",
 				description: "This task will be updated",
-				completed: false,
-				due_date: "2025-07-01T00:00:00.000Z",
-			};
-			// fixme: createTask does not return the id
-			const taskId = await createTask(taskData);
+				completed: false
+			});
 
 			const updatedData = {
 				name: "Updated Task",
@@ -198,8 +182,7 @@ describe("Task API Integration Tests", () => {
 			const taskId = await createTask({
 				name: "Task",
 				description: "...",
-				completed: false,
-				due_date: "2026-01-01T00:00:00.000Z",
+				completed: false
 			});
 			const invalidUpdateData = { name: "" }; // Invalid name
 			const response = await SELF.fetch(`http://local.test/tasks/${taskId}`, {
@@ -221,10 +204,10 @@ describe("Task API Integration Tests", () => {
 				completed: false,
 				due_date: "2026-08-01T00:00:00.000Z",
 			};
-			const taskId = await createTask(taskData);
+			const task = await createTask(taskData);
 
 			const deleteResponse = await SELF.fetch(
-				`http://local.test/tasks/${taskId}`,
+				`http://local.test/tasks/${task.id}`,
 				{
 					method: "DELETE",
 				},
@@ -236,10 +219,10 @@ describe("Task API Integration Tests", () => {
 
 			expect(deleteResponse.status).toBe(200);
 			expect(deleteBody.success).toBe(true);
-			expect(deleteBody.result.id).toBe(taskId);
+			expect(deleteBody.result.id).toBe(task.id);
 
 			// Verify the task is actually deleted
-			const getResponse = await SELF.fetch(`http://local.test/tasks/${taskId}`);
+			const getResponse = await SELF.fetch(`http://local.test/tasks/${task.id}`);
 			expect(getResponse.status).toBe(404);
 		});
 
