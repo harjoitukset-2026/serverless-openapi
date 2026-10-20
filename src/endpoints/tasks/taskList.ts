@@ -35,9 +35,6 @@ export class TaskList extends OpenAPIRoute {
             ]
           }
         }
-      },
-      404: {
-        description: 'No tasks found'
       }
     }
   };
